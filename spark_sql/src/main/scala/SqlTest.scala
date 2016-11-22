@@ -5,12 +5,22 @@ object SqlTest {
 
     case class Person(name: String, age: Int, gender: String)
 
-    def plus(x: Int, y: Int) : Int = {
+    def plus(x: Int)(y: Int) : Int = {
         val z: Int = x + y
         z
     }
 
-    def minus(x : Int, y: Int) : Int = plus(x, y)
+    def minus(x : Int, y: Int) : Int = plus(x)(y)
+
+    def bigger(o: Any): Any = {
+        o match {
+            case i: Int if i < 0 => i - 1
+            case i: Int => i + 1
+            case d: Double if d < 0.0 => d - 0.1
+            case d: Double => d + 0.1
+            case text: String => text + "s"
+        }
+    }
 
     def main(args: Array[String]) {
         System.setProperty("hadoop.home.dir", "C:\\Users\\zhangyazhong\\IdeaProjects\\spark_demo\\hadoop")
@@ -39,19 +49,5 @@ object SqlTest {
         personDataFrame.createOrReplaceTempView("person")
         val teenagersDF = sparkSession.sql("SELECT name, age, gender FROM person WHERE age BETWEEN 13 AND 19")
         teenagersDF.show()
-
-
-//        df.createOrReplaceTempView("person")
-//        val all = spark.sql("select * from person")
-//        println(all)
-//        df.show()
-//        df.show()
-//        val conf = new SparkConf().setMaster("local").setAppName("demo")
-//        val sc = new SparkContext(conf)
-//        val sqlContext = new SQLContext(sc)
-//        val persons = sc.textFile("examples/src/main/resources/persons.txt").map(_.split(",")).map(p => Person(p(0), p(1).trim.toInt)).toDF()
-//        persons.registerAsTable("person")
-//        val teenagers = sqlContext.sql("SELECT name FROM person WHERE age >= 13 AND age <= 19")
-//        teenagers.map(t => "Name: " + t(0)).collect().foreach(println)
     }
 }
