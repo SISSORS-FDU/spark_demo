@@ -13,23 +13,25 @@ object SqlTest {
     def minus(x : Int, y: Int) : Int = plus(x, y)
 
     def main(args: Array[String]) {
-
+        System.setProperty("hadoop.home.dir", "C:\\Users\\zhangyazhong\\IdeaProjects\\spark_demo\\hadoop")
 
         val sparkSession = SparkSession
             .builder()
             .master("local")
             .appName("SparkDemo")
+            // Windows extra setting
+            .config("spark.sql.warehouse.dir", "file:///")
             .getOrCreate()
 
-
-        import sparkSession.implicits._
         /*
-        val df = sparkSession.read.json("spark_sql/src/main/resources/persons.json")
+        val df = sparkSession.read.json("spark_sql\\src\\main\\resources\\persons.json")
         df.createOrReplaceTempView("person")
         val sqlDF = sparkSession.sql("SELECT * FROM person WHERE age<20")
         sqlDF.show()
         */
-        val personDataFrame = sparkSession.sparkContext.textFile("spark_sql/src/main/resources/persons.txt")
+
+        import sparkSession.implicits._
+        val personDataFrame = sparkSession.sparkContext.textFile("spark_sql\\src\\main\\resources\\persons.txt")
             .map(_.split(","))
             .map(cols => Person(cols(0), cols(1).trim.toInt, cols(2)))
             .toDF()
