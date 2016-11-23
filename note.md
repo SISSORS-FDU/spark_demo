@@ -1,6 +1,10 @@
 ## spark收藏夹
 > http://www.one-tab.com/page/Z-A3VA7mQkK6-vHIz7AoSw
 
+> http://abbeychenxi.net/sql-parser-in-antlr/
+
+> http://dataunion.org/21057.html
+
 ## maven plugin配置：
 > https://my.oschina.net/zh119893/blog/276090
 
