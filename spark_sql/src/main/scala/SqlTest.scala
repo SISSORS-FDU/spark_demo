@@ -28,7 +28,7 @@ object SqlTest {
         val sparkSession = SparkSession
             .builder()
             .master("local")
-            .appName("SparkDemo")
+            .appName("SparkSQL")
             // Windows extra setting
             .config("spark.sql.warehouse.dir", "file:///")
             .getOrCreate()
